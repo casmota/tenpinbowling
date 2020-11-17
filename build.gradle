@@ -1,0 +1,44 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.3.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'java'
+}
+
+group = 'com.casmota'
+version = '1.0.0'
+description = 'Ten-Pin Bowling'
+sourceCompatibility = '1.8'
+archivesBaseName = 'tenpinbowling'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter:2.3.3.RELEASE'
+    testImplementation('org.springframework.boot:spring-boot-starter-test:2.3.3.RELEASE') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'com.ginsberg:junit5-system-exit:1.0.0'
+    testImplementation(platform('org.junit:junit-bom:5.7.0'))
+    testImplementation('org.junit.jupiter:junit-jupiter')
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    destinationDirectory.set(file("$buildDir/jardir"))
+}
+
+bootJar {
+    destinationDirectory.set(file("$buildDir"))
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
